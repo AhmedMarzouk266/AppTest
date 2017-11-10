@@ -8,6 +8,6 @@
     <title>About Us page</title>
 </head>
 <body>
-    we are inside the index view..
+    we are inside the About view..
 </body>
 </html>
