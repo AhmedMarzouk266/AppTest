@@ -33,6 +33,7 @@ class Router
            // to the construct of the abstract controller
        }else{
            echo "Class does not exist..<br/>";
+           die();
        }
 
        $method = self::$route['action']."Action";
@@ -42,6 +43,7 @@ class Router
            $controller->getView();
        }else{
            echo "method does not exist..";
+           die();
        }
     }
 

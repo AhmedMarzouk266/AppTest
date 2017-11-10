@@ -17,6 +17,9 @@ class MainController extends Controller
             'answer' => " Ahmed..",
         ]);
 
+//        $db = DB::getInstance();
+//        debug($db);
+
     }
 
 }

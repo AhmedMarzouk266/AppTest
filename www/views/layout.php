@@ -16,13 +16,10 @@
     echo $content ;
 ?>
 
-
-
 <script src="..\public\javascripts\bootstrap.min.js"></script>
 <script src="..\public\javascripts\jquery-3.2.1.min.js"></script>
 <script src="..\public\javascripts\scripts.js"></script>
 
 </body>
-
 </html>
 

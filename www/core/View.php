@@ -17,10 +17,7 @@ class View
         $this->route = $route ;
         $this->layout = LAYOUT_DEFAULT;
         $this->view = $view;
-
     }
-
-
 
     public function render($vars){ // $vars[] also recieved
         $layoutFile = DIR_VIEW."/".$this->layout.".php" ;
@@ -34,9 +31,5 @@ class View
         }else{
             echo "Failed to require the layout..";
         }
-
     }
-
-
-
 }
