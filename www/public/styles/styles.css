@@ -1,0 +1,12 @@
+body{
+    background-color: aqua;
+}
+
+h1{
+    color: black;
+    text-align: center;
+}
+
+#button_1{
+    align-self: center;
+}
