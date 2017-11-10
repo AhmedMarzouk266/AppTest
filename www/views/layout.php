@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1> FILES LAYOUT..</h1>
+<h1> FILES test ..</h1>
 <?php
     echo $content ;
 ?>
