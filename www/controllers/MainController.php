@@ -10,7 +10,7 @@ class MainController extends Controller
 {
 
     public function indexAction(){
-        $this->view = 'test';
+        //$this->view = 'test';
 
         $this->setVars([
             'quest' => "what is your name ?",

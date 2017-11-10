@@ -1,13 +1,11 @@
 <?php
 
 spl_autoload_register(function($classname){
-
+// runs when you make a class
     $classname = ucwords($classname);
     $path = ROOT."/controllers/{$classname}.php" ;
     if(file_exists($path)){
         require_once ($path);
-    }else{
-        die("the file {$classname}.php does not exist");
     }
 
 });

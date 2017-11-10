@@ -10,7 +10,7 @@ abstract class Controller
 {
     public  $layout ;
     public  $objView   ;
-    public  $view ;
+    public  $view ; // set by class
     public  $quest; // already set by class
     public  $vars = [];
     public  $route = [];
