@@ -12,13 +12,19 @@ class MainController extends Controller
     public function indexAction(){
         //$this->view = 'test';
 
-        $this->setVars([
-            'quest' => "what is your name ?",
-            'answer' => " Ahmed..",
-        ]);
+        $data = array(
+            'id' => 4,
+            'quest'=> 'What do you want ?',
+            'sort' =>'10'
+        );
 
-//        $db = DB::getInstance();
-//        debug($db);
+
+        Question::save($data);
+
+        $questions = Question::findAll();
+        $question = Question::findOneById(1);
+
+        $this->setVars($questions);
 
     }
 

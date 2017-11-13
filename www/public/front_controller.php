@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(-1);
 spl_autoload_register(function($classname){
 // runs when you make a class
     $classname = ucwords($classname);
@@ -8,6 +8,8 @@ spl_autoload_register(function($classname){
         require_once (ROOT."/controllers/{$classname}.php");
     }elseif(file_exists(ROOT."/core/{$classname}.php")){
         require_once (ROOT."/core/{$classname}.php");
+    }elseif(file_exists(ROOT."/models/{$classname}.php")){
+        require_once (ROOT."/models/{$classname}.php");
     }
 
 });
