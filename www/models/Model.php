@@ -12,6 +12,7 @@ abstract class Model
     public static $db; // DB class object.
     public $id;
     protected $attributes = array();
+    protected $attr_count;
 
     public function __construct()
     {
@@ -25,11 +26,13 @@ abstract class Model
         }
     }
 
-//    public function __set($name, $value)
-//    {
-//        $this->attributes[$name] = $value ;
-//    }
-//
+    public function __set($name, $value)
+    {
+        if(array_key_exists($name,$this->attributes)){
+            $this->attributes[$name] = $value;
+        }
+    }
+
     public function __get($name)
     {
         if (isset($this->attributes[$name])) {
@@ -47,7 +50,7 @@ abstract class Model
 
         }
 
-       // debug($this->attributes);
+        // debug($this->attributes);
     }
 
 
@@ -56,19 +59,18 @@ abstract class Model
         self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
         $result = self::$db->pdo->query($sql);
-        $questions = array();
+        $records = array();
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 $object = new static();
-                if(isset($row['id'])){
-                    $object->id = (int) $row['id'];
+                if (isset($row['id'])) {
+                    $object->id = (int)$row['id'];
                 }
                 $object->load($row);
-                $questions[] =  $object ;
+                $records[] = $object;
             }
         }
-        debug($questions);
-        return $questions;
+        return $records; // array of objects !
     }
 
     public static function findOneById($id)
@@ -77,42 +79,75 @@ abstract class Model
         $sql = "SELECT * FROM " . static::$tableName;
         $sql .= " WHERE id =" . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
-        $question = [];
+        $record = [];
+
         if ($result->rowCount() > 0) {
-            $i = 1;
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                $question = $row;
-                $i++;
+                $object = new static();
+                if (isset($row['id'])) {
+                    $object->id = (int)$row['id'];
+                }
+                $object->load($row);
+                $record[] = $object;
             }
         }
-        return $question;
+        return $record;
     }
 
-    public static function insert($data)
+    public function insert()
     {
-        self::setDB();
+        $marks = [];
+        $this->attr_count = sizeof(array_keys($this->attributes)); // 5
+        for ($i = 0; $i < $this->attr_count; $i++) {
+            $marks[] = '?';
+        }
 
-        $stmt = self::$db->pdo->prepare('INSERT INTO questions (quest,sort)
-        VALUES (?,?)');
-        $stmt->execute(array($data['quest'], $data['sort']));
+        $sql = "INSERT INTO " . static::$tableName;
+        $sql .= " (";
+        $sql .= join(',', array_keys($this->attributes));
+        $sql .= ") ";
+        $sql .= "VALUES (";
+        $sql .= join(',', $marks);
+        $sql .= ");";
+
+        $stmt = self::$db->pdo->prepare($sql);
+        $stmt->execute(array_values($this->attributes));
+
+        $last_id = self::$db->pdo->lastInsertId();
+        if($last_id){
+            $this->id = (int)$last_id;
+        }
+        return  $this->id;
+    }
+
+    public function update()
+    {
+        $key_value = [];
+        foreach ($this->attributes as $key => $value) {
+            $key_value[] = "{$key} = ? ";
+        }
+        $sql = "UPDATE " . static::$tableName . " SET ";
+        $sql .= join(',', $key_value);
+        $sql .= "WHERE id = ?";
+        $stmt = self::$db->pdo->prepare($sql);
+        $values = array_values($this->attributes);
+        $values[]= $this->id;
+        $stmt->execute($values);
+
+        if($stmt->rowCount()== 1){
+            return true;
+        }else{
+            return false;
+        }
 
     }
 
-    public static function update($data)
+    public function save()
     {
-        self::setDB();
-
-        $stmt = self::$db->pdo->prepare('UPDATE questions SET
-        quest = ? ,sort = ? WHERE id= ?');
-        $stmt->execute(array($data['quest'], $data['sort'], $data['id']));
-    }
-
-    public static function save($data)
-    {
-        if (static::findOneById($data['id'])) {
-            static::update($data);
+        if (isset($this->id)) {
+            return $this->update();
         } else {
-            static::insert($data);
+            return $this->insert();
         }
     }
 

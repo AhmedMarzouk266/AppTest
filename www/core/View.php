@@ -23,6 +23,7 @@ class View
         $layoutFile = DIR_VIEW."/".$this->layout.".php" ;
        // $this->vars = $vars;
         extract($vars);
+        //extract gives you vars in the back ground so you can use them
         if(file_exists($layoutFile)){
             ob_start();
             require_once (DIR_VIEW."/".$this->route['controller']."/".$this->view.".php");

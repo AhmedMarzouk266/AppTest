@@ -13,7 +13,6 @@ class MainController extends Controller
         //$this->view = 'test';
 
 
-
         $data = array(
             'id' => 4,
             'quest'=> 'What do you want ?',
@@ -22,18 +21,23 @@ class MainController extends Controller
 
 
         $item = new Question();
+        $item->id = 30;
+        $item->quest = "TEST 10 ?";
+        $item->sort  = 50 ;
+        // $item->save()? 'true' : 'false' ;
 
-        $item->quest = 'No ??';
-        $item->sort  = 100;
 
-        Question::save($data);
+        $item2 = new Question();
+        $item2->quest = "GOOD ?";
+        $item2->sort = 5;
+        $item2->st = 5;
+        //$item2->save();
+
+
+
 
         $questions = Question::findAll();
-
-
-
-
-        $question = Question::findOneById(1);
+        $question  = Question::findOneById(1);
 
         $this->setVars($questions);
 
