@@ -10,8 +10,10 @@ class Question extends Model
 {
     public static $tableName  = 'questions';
     protected $attributes = array(
-        'quest' => "",
-        'sort' => 100
+        'title' => "",
+        'sort' => 100,
+        'test_id' => 1,
+        'right_ans_id' => 1
     );
 
 }

@@ -12,7 +12,6 @@ abstract class Model
     public static $db; // DB class object.
     public $id;
     protected $attributes = array();
-    protected $attr_count;
 
     public function __construct()
     {
@@ -54,10 +53,15 @@ abstract class Model
     }
 
 
-    public static function findAll()
+    public static function findAll($options=[])
     {
         self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
+
+        if(isset($options['test_id'])){
+            $sql .=" WHERE test_id=".$options['test_id'];
+         }
+
         $result = self::$db->pdo->query($sql);
         $records = array();
         if ($result->rowCount() > 0) {
@@ -79,7 +83,8 @@ abstract class Model
         $sql = "SELECT * FROM " . static::$tableName;
         $sql .= " WHERE id =" . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
-        $record = [];
+        $record_objects = [];
+        $records =[];
 
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -88,17 +93,18 @@ abstract class Model
                     $object->id = (int)$row['id'];
                 }
                 $object->load($row);
-                $record[] = $object;
+                $record_objects[] = $object;
             }
         }
-        return $record;
+        return $record_objects;
     }
+
 
     public function insert()
     {
         $marks = [];
-        $this->attr_count = sizeof(array_keys($this->attributes)); // 5
-        for ($i = 0; $i < $this->attr_count; $i++) {
+        $attr_count = sizeof(array_keys($this->attributes));
+        for ($i = 0; $i < $attr_count; $i++) {
             $marks[] = '?';
         }
 

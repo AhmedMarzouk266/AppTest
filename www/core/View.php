@@ -19,7 +19,7 @@ class View
         $this->view = $view;
     }
 
-    public function render($vars){ // $vars[] also recieved
+    public function render($vars){
         $layoutFile = DIR_VIEW."/".$this->layout.".php" ;
        // $this->vars = $vars;
         extract($vars);

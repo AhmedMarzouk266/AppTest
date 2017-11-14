@@ -21,10 +21,13 @@
     <div>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="..\Main">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="..\about">About</a>
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/test">Tests</a>
             </li>
         </ul>
     </div>
@@ -33,9 +36,8 @@
 
 <div class="container">
 
-    <h1> FILES test ..</h1>
     <?php
-    echo $content;
+        echo $content;
     ?>
 </div>
 

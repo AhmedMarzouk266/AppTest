@@ -7,12 +7,18 @@ class Router
 {
     public static $route = [ // route
         'controller' => 'Main',
-        'action' => 'index'
+        'action' => 'index',
     ];
 
     public static function dispatch($url)
     {
+        $url      = preg_replace('~[&?]~','/',$url);
         $parseUrl = explode('/', trim($url, '/'));
+
+
+
+
+       // debug($parseUrl,true);
 
         // check and redirect:
        if(sizeof($parseUrl)>0){
@@ -20,9 +26,10 @@ class Router
                self::$route['controller'] = $parseUrl[0];
            }
            if(sizeof($parseUrl)>1){
-           self::$route['action']     = $parseUrl[1];
+               self::$route['action']     = $parseUrl[1];
            }
        }
+
 
        self::setNameControllerAction();
 
