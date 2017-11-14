@@ -27,7 +27,7 @@ abstract class Model
 
     public function __set($name, $value)
     {
-        if(array_key_exists($name,$this->attributes)){
+        if (array_key_exists($name, $this->attributes)) {
             $this->attributes[$name] = $value;
         }
     }
@@ -53,19 +53,29 @@ abstract class Model
     }
 
 
-    public static function findAll($options=[])
+    public static function findAll($options = [])
     {
         self::setDB();
+        //debug($options,true);
         $sql = "SELECT * FROM " . static::$tableName;
 
-        if(isset($options['test_id'])){
-            $sql .=" WHERE test_id=".$options['test_id'];
-         }
+        if (sizeof($options) > 0) {
+            $key_value = [];
+            foreach ($options as $key => $value) {
+                $key_value[] = "{$key} = ? ";
+            }
 
-        $result = self::$db->pdo->query($sql);
+            $sql .= " WHERE ";
+            $sql .= join('AND ', $key_value);
+
+        }
+
+        $stmt = self::$db->pdo->prepare($sql);
+        $result = $stmt->execute(array_values($options));
+
         $records = array();
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        if ($result) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $object = new static();
                 if (isset($row['id'])) {
                     $object->id = (int)$row['id'];
@@ -84,7 +94,7 @@ abstract class Model
         $sql .= " WHERE id =" . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
         $record_objects = [];
-        $records =[];
+        $records = [];
 
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -120,10 +130,10 @@ abstract class Model
         $stmt->execute(array_values($this->attributes));
 
         $last_id = self::$db->pdo->lastInsertId();
-        if($last_id){
+        if ($last_id) {
             $this->id = (int)$last_id;
         }
-        return  $this->id;
+        return $this->id;
     }
 
     public function update()
@@ -137,12 +147,12 @@ abstract class Model
         $sql .= "WHERE id = ?";
         $stmt = self::$db->pdo->prepare($sql);
         $values = array_values($this->attributes);
-        $values[]= $this->id;
+        $values[] = $this->id;
         $stmt->execute($values);
 
-        if($stmt->rowCount()== 1){
+        if ($stmt->rowCount() == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
 

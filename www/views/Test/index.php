@@ -4,7 +4,11 @@
 
 <?php foreach($tests as $test){ ?>
 
-     <?= $test->title?>  <br/>
 
+    <ul>
+        <li>
+            <a href="\test\questions?test_id=<?php echo $test->id?> "><?= $test->title?></a>
+        </li>
+    </ul>
 
 <?php } ?>
