@@ -15,5 +15,6 @@ class Question extends Model
         'test_id' => 1,
         'right_ans_id' => 1
     );
+    public $answers;
 
 }

@@ -53,13 +53,13 @@ abstract class Model
     }
 
 
-    public static function findAll($options = [])
+    public static function findAll($options = [],$limit = false )
     {
         self::setDB();
         //debug($options,true);
         $sql = "SELECT * FROM " . static::$tableName;
 
-        if (sizeof($options) > 0) {
+        if (count($options) > 0) {
             $key_value = [];
             foreach ($options as $key => $value) {
                 $key_value[] = "{$key} = ? ";
@@ -68,6 +68,10 @@ abstract class Model
             $sql .= " WHERE ";
             $sql .= join('AND ', $key_value);
 
+        }
+
+        if($limit){
+            $sql .= " LIMIT 1";
         }
 
         $stmt = self::$db->pdo->prepare($sql);
