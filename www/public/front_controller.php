@@ -1,5 +1,6 @@
 <?php
-error_reporting(-1);
+
+
 spl_autoload_register(function($classname){
 // runs when you make a class
     $classname = ucwords($classname);
@@ -13,6 +14,10 @@ spl_autoload_register(function($classname){
     }
 
 });
+
+// sessions
+session_start();
+
 
 require_once ('../core/functions.php');
 

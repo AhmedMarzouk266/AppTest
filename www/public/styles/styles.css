@@ -10,3 +10,7 @@ h1{
 #button_1{
     align-self: center;
 }
+
+form {
+    display: inline-block; //Or display: inline;
+}

@@ -8,7 +8,7 @@
 
 class Question extends Model
 {
-    public static $tableName  = 'questions';
+    public static $tableName = 'questions';
     protected $attributes = array(
         'title' => "",
         'sort' => 100,
@@ -17,9 +17,52 @@ class Question extends Model
     );
     public $answers = array();
 
-    public function setAnswers(){
-        $answers = Answer::findAll(['quest_id'=>$this->id]);
-        debug($answers,true);
+    public function setAnswers()
+    {
+        $answers = Answer::findAll(['quest_id' => $this->id]);
+        $this->answers = $answers;
     }
+
+    // method here to process questions, all questions get by test_id
+    public static function getNextQuestion($test_id,$method)
+    {
+        // function return back the next question that does not exist in the session IDs array.
+        $questions = Question::findAll(['test_id' => $test_id]);
+
+            if ($method == 'next') {
+                foreach ($questions as $question) {
+                    if (!in_array($question->id, $_SESSION['QUESTIONS'])) {
+                        $question->setAnswers();
+
+                        return $question;
+                    }
+                }
+                return false ;
+            } elseif ($method == 'previous') {
+                return Question::getPrevQuestion($test_id);
+            }
+
+
+    }
+
+    public static function getPrevQuestion($test_id)
+    {
+
+        $questions = Question::findAll(['test_id' => $test_id]);
+        foreach ($questions as $question){
+            $last_id = $_SESSION['QUESTIONS'][count($_SESSION['QUESTIONS'])-2];
+
+            debug($last_id);
+            if($question->id == $last_id ){
+                $question->setAnswers();
+                $_SESSION['QUESTIONS'][count($_SESSION['QUESTIONS'])];
+                return $question;
+            }
+        }
+        $questions[0]->setAnswers();
+        return $questions[0];
+
+    }
+
 
 }

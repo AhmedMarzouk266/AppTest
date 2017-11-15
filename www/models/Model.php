@@ -74,6 +74,7 @@ abstract class Model
             $sql .= " LIMIT 1";
         }
 
+
         $stmt = self::$db->pdo->prepare($sql);
         $result = $stmt->execute(array_values($options));
 
@@ -88,18 +89,16 @@ abstract class Model
                 $records[] = $object;
             }
         }
+
         return $records; // array of objects !
     }
 
     public static function findOneById($id)
-    {
+    { // returns one object ! not array
         self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
         $sql .= " WHERE id =" . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
-        $record_objects = [];
-        $records = [];
-
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 $object = new static();
@@ -107,10 +106,10 @@ abstract class Model
                     $object->id = (int)$row['id'];
                 }
                 $object->load($row);
-                $record_objects[] = $object;
+                $record_object = $object;
             }
         }
-        return $record_objects;
+        return $record_object;
     }
 
 
