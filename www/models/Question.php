@@ -37,31 +37,17 @@ class Question extends Model
                         return $question;
                     }
                 }
-                return false ;
+                return false;
             } elseif ($method == 'previous') {
                 return Question::getPrevQuestion($test_id);
             }
 
-
-    }
-
-    public static function getPrevQuestion($test_id)
-    {
-
-        $questions = Question::findAll(['test_id' => $test_id]);
-        foreach ($questions as $question){
-            $last_id = $_SESSION['QUESTIONS'][count($_SESSION['QUESTIONS'])-2];
-
-            debug($last_id);
-            if($question->id == $last_id ){
-                $question->setAnswers();
-                $_SESSION['QUESTIONS'][count($_SESSION['QUESTIONS'])];
-                return $question;
-            }
         }
-        $questions[0]->setAnswers();
-        return $questions[0];
 
+
+    public static function getPrevQuestion()
+    {
+        return self::findOneById($_SESSION['last_quest_id']);
     }
 
 

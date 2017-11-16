@@ -8,6 +8,7 @@
 
 class TestController extends Controller
 {
+
     public function indexAction()
     {
         $title = "list of tests";
@@ -15,53 +16,67 @@ class TestController extends Controller
         $this->setVars(compact('title', 'tests'));
     }
 
-    public function questionsAction()
-    {
-        $test_id = 0;
+    public function questionsAction(){
+        $testId = 0;
         if (isset ($_GET['test_id'])) {
-            $test_id = $_GET['test_id'];
+            $testId = $_GET['test_id'];
         }
-
-        // if we don not have questions in sessions so new array
-        if (!isset($_SESSION['QUESTIONS'])) {
-            $_SESSION['QUESTIONS'] = [];
-        }
-
-
+        // if we don not have questions in sessions (it happens when we finish questions) so new array
+        $this->initSession($testId);
         // show answer and question id !
-        if(isset($_POST['submit'])){
-            if(isset($_POST['answer'])){
-                echo "   Answer ID =".$_POST['answer'];
-            }if(isset($_POST['quest_id'])){
-                echo "   QUESTION ID =".$_POST['quest_id'];
-            }
-        }else{
-            echo "Not submitted";
-        }
-
-
-
-
+        $errors = $this->checkAnswers();
         $method = isset($_GET['method']) ? $_GET['method'] : 'next';
-        $question = Question::getNextQuestion($test_id, $method);
+        $question = Question::getNextQuestion($testId, $method);
+        $_SESSION['test_id'] = $question->test_id;
         if ($question === false) {
-            $this->success();
+            $this->result();
             return; // not to complete code.
         }
         $answers = $question->answers;
-        $right_ans = $question->right_ans_id;
-        $_SESSION['QUESTIONS'][] = $question->id;
-
-        $this->setVars(compact('question', 'answers'));
+        $this->setVars(compact('question', 'answers', 'errors'));
 
     }
 
-    protected function success()
-    {
+    protected function checkAnswers(){
+        if (isset($_POST['submit'])) {
+            if (isset($_POST['answer']) && isset($_POST['quest_id'])) {
+                $answer = $_POST['answer'];
+                $quest_id = $_POST['quest_id'];
+                // $_SESSION['last_quest_id'] = $_POST['quest_id'];
+
+                $question = Question::findOneById($quest_id);
+                $_SESSION['QUESTIONS'][] = $question->id;
+                $right_ans_id = $question->right_ans_id;
+
+                if ($answer == $right_ans_id) {
+                    $_SESSION['right_answers'][] = $answer;
+                    $_SESSION['right_answers_count']++;
+                } else {
+                    $_SESSION['wrong_answers'][] = $answer;
+                    $_SESSION['wrong_answers_count']++;
+                }
+            } else {
+                $errors[] = "please choose an answer..";
+                return $errors;
+            }
+        }
+    }
+
+    protected function result(){
         $this->view = 'success';
-        unset( $_SESSION['QUESTIONS']);
+        unset($_SESSION['QUESTIONS']);
+        unset($_SESSION['test_id']);
     }
 
+    protected function initSession($testId){
+        if (!isset($_SESSION['QUESTIONS']) || $_SESSION['test_id'] != $testId) {
+            $_SESSION['QUESTIONS'] = [];
+            $_SESSION['right_answers'] = array();
+            $_SESSION['right_answers_count'] = 0;
+            $_SESSION['wrong_answers'] = array();
+            $_SESSION['wrong_answers_count'] = 0;
+        }
+    }
 
 
 }
