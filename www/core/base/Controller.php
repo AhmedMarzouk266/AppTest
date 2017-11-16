@@ -6,6 +6,9 @@
  * Time: 15:36
  */
 
+namespace core\base;
+use core\base\View;
+
 abstract class Controller
 {
     public $layout;
@@ -30,9 +33,13 @@ abstract class Controller
 
     public function getView()
     {
-        $this->objView = new View($this->route, $this->view);
+        $this->objView = new View($this->route, $this->view, $this->layout);
         $this->objView->render($this->vars);
 
+    }
+
+    public function redirect($location){
+        header("location: ".$location);
     }
 
 

@@ -6,6 +6,9 @@
  * Time: 12:42
  */
 
+namespace core\base;
+use core\DB;
+
 abstract class Model
 {
     public static $tableName;
@@ -53,8 +56,7 @@ abstract class Model
     }
 
 
-    public static function findAll($options = [],$limit = false )
-    {
+    public static function findAll($options = [], $limit = false){
         self::setDB();
         //debug($options,true);
         $sql = "SELECT * FROM " . static::$tableName;
@@ -70,7 +72,7 @@ abstract class Model
 
         }
 
-        if($limit){
+        if ($limit) {
             $sql .= " LIMIT 1";
         }
 
@@ -80,7 +82,7 @@ abstract class Model
 
         $records = array();
         if ($result) {
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                 $object = new static();
                 if (isset($row['id'])) {
                     $object->id = (int)$row['id'];
@@ -93,14 +95,13 @@ abstract class Model
         return $records; // array of objects !
     }
 
-    public static function findOneById($id)
-    { // returns one object ! not array
+    public static function findOneById($id){ // returns one object ! not array
         self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
         $sql .= " WHERE id =" . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
         if ($result->rowCount() > 0) {
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
                 $object = new static();
                 if (isset($row['id'])) {
                     $object->id = (int)$row['id'];

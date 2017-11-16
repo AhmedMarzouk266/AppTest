@@ -6,13 +6,13 @@
  * Time: 15:36
  */
 
-class MainController extends Controller
+namespace controllers;
+class MainController extends AppController
 {
 
     public function indexAction(){
         //$this->view = 'test';
         //$this->setVars(compact('title','tests'));
-
 
     }
 

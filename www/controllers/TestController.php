@@ -6,7 +6,11 @@
  * Time: 13:16
  */
 
-class TestController extends Controller
+namespace controllers;
+use models\Question;
+use models\Test;
+
+class TestController extends AppController
 {
 
     public function indexAction()
@@ -14,6 +18,7 @@ class TestController extends Controller
         $title = "list of tests";
         $tests = Test::findAll();
         $this->setVars(compact('title', 'tests'));
+        $this->view = 'index';
     }
 
     public function questionsAction(){
@@ -29,7 +34,11 @@ class TestController extends Controller
         $question = Question::getNextQuestion($testId, $method);
         $_SESSION['test_id'] = $question->test_id;
         if ($question === false) {
-            $this->result();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->result();
+            }else{
+                $this->indexAction();
+            }
             return; // not to complete code.
         }
         $answers = $question->answers;

@@ -5,6 +5,9 @@
  * Date: 13.11.2017
  * Time: 12:44
  */
+namespace models;
+
+use core\base\Model;
 
 class Question extends Model
 {
