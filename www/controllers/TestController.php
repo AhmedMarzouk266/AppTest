@@ -38,7 +38,7 @@ class TestController extends Controller
     }
 
     protected function checkAnswers(){
-        if (isset($_POST['submit'])) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['answer']) && isset($_POST['quest_id'])) {
                 $answer = $_POST['answer'];
                 $quest_id = $_POST['quest_id'];

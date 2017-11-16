@@ -13,7 +13,7 @@
     <?php foreach ($answers as $answer){ ?>
 
     <label>
-            <input type="radio" name="answer" value="<?=$answer->id?>">
+            <input type="submit" type="radio" name="answer" onchange='this.form.submit();' value="<?=$answer->id?>">
             <img src="<?=$answer->images?>" height="42" width="42">
     </label>
             <br/> <br/>
@@ -21,7 +21,7 @@
     <?php } ?>
     <br/>
     <p style="color: #c12e2a"><?= $errors[0]?></p><br/><hr/>
-    <button class="btn btn-info" type="submit" name="submit">Next</button>
+
 </form>
 
 <!--href="questions?test_id=--><?//=$question->test_id?><!--&method=next"-->
