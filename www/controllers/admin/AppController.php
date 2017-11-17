@@ -20,18 +20,20 @@ abstract class AppController extends Controller
 
         parent::__construct($route);
         $this->layout = LAYOUT_ADMIN_DEFAULT;
-        if(!$this->checkLogin($adminData)){
-            if($route['controller']=='Main' && $route['action']=='index'){
-                return;
+        if(!$this->checkLogin($adminData)){ // if not logged in redirect him
+            if($route['controller']=='Main' && $route['action']=='login'){
+                return; // if this is the Main login so no need to redirect him !
             }
-            $this->redirect("/admin");
+            $this->redirect("/admin/Main/login");
         }
-
+        if($route['controller']=='Main' && $route['action']=='login'){
+            $this->redirect("/admin/Main/index");
+        }
     }
 
     public function checkLogin($adminData)
     {
-        if (isset($_SESSION['USER'])) {
+        if (!empty($_SESSION['USER'])) {
             return true;
         } else {
             if ($_POST['userName'] == $adminData['user'] && $_POST['password'] == $adminData['pass']) {
@@ -44,7 +46,6 @@ abstract class AppController extends Controller
         }
 
     }
-
 
 
 }

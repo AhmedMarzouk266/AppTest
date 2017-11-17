@@ -171,5 +171,13 @@ abstract class Model
         }
     }
 
+    public static function deleteById($id){
+        self::setDB();
+        $sql  = "DELETE FROM ".static::$tableName;
+        $sql .= " WHERE id= ? ";
+        $stmt = self::$db->pdo->prepare($sql);
+        $stmt->execute([$id]);
+    }
+
 
 }

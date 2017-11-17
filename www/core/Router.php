@@ -34,6 +34,8 @@ class Router
        $method = self::$route['action']."Action";
        if(method_exists($nameController,$method)){
            $controller->$method();
+           debug(self::$route);
+           debug($controller,true);
            $controller->getView();
        }else{
            echo "method does not exist..";

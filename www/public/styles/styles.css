@@ -7,6 +7,11 @@ h1{
     text-align: center;
 }
 
+h4{
+    color: black;
+    text-align: left;
+}
+
 #button_1{
     align-self: center;
 }
@@ -66,4 +71,20 @@ h4 {
 
 .wrapper {
     text-align: center;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }

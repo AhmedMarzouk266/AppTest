@@ -29,6 +29,8 @@ class View
             require_once (DIR_VIEW."/".$this->route['prefix'].$this->route['controller']."//".$this->view.".php");
             $content = ob_get_clean();
             require_once($layoutFile);
+
+
         }else{
             echo "Failed to require the layout..";
         }
