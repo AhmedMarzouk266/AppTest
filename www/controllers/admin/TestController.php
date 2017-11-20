@@ -31,9 +31,41 @@ class TestController extends AppController
     }
 
     public function editAction(){
+
+        $this->view ='form';
         $test_id = $_GET['test_id'];
-        $test = Test::findOneById($test_id);
-        $questions = Question::findAll(['test_id' => $test_id]);
-        $this->setVars(compact('test','questions'));
+        $test    = Test::findOneById($test_id);
+        $this->setVars(compact('test'));
+
+        if(!empty($_POST)){
+            $test = Test::findOneById($test_id);
+            $test->load($_POST);
+            $test->save();
+            $this->redirect('\admin\test');
+        }
     }
+
+
+    public function addAction()
+    {
+        $this->view ='form';
+        if(!empty($_POST)){
+            $test = new Test();
+            $test->load($_POST);
+            $test->save();
+            $this->redirect('\admin\test');
+        }
+    }
+
+    public function showAction (){
+        if(!empty($_GET['test_id'])) {
+            $test_id = $_GET['test_id'];
+            $test    = Test::findOneById($test_id);
+
+
+            $questions = Question::findAll(['test_id'=>$test_id]);
+            $this->setVars(compact('test','questions'));
+        }
+    }
+
 }

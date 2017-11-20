@@ -7,30 +7,41 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <link rel="stylesheet" type="text/css" href="..\public\styles\bootstrap.min.css">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="..\..\public\styles\styles.css">
+<!--    <link rel="stylesheet" type="text/css" href="..\..\public\styles\styles.css">-->
 
 </head>
 <body class="container-fullwidth" style="background-color:white">
 
-<nav class="navbar  navbar-toggleable navbar-light" style="background-color: #adadad;">
+<nav class="navbar  navbar-toggleable navbar-light">
     <a class="navbar-brand" href="\admin">AppTest Admin</a>
 
-    <div class="navbar-right" style="padding-right: 50px;">
+
         <ul class="navbar-nav nav">
-            <?php if(!empty($_SESSION['USER'])){ ?>
-                <li class="nav-item ">
-                   <a href="#" type="submit" name="logout"> User : <?=$_SESSION['USER']?></a>
-                </li>
-                <li class="nav-item ">
-                    <a href="\admin\main\logout" type="submit" name="logout">Log Out</a>
-                </li>
-            <?php }?>
+            <li class="nav-item ">
+                <a href="/admin/question">All Questions</a><br/><br/>
+            </li>
+            <li class="nav-item ">
+                <a href="/admin/answer">All Answers</a><br/><br/>
+            </li>
+
         </ul>
-    </div>
+        <ul class="nav navbar-nav navbar-right " style="margin-right: 15px;">
+            <?php if(!empty($_SESSION['USER'])){ ?>
+                    <li class="nav-item">
+                        <a href="#" type="submit" name="logout"> User : <?=$_SESSION['USER']?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="\admin\main\logout" type="submit" name="logout">Log Out</a>
+                    </li>
+
+            <?php }?>
+
+        </ul>
+
 
 </nav>
 

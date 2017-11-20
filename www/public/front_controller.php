@@ -23,6 +23,7 @@ define('DIR_VIEW',ROOT."/views");
 define('LAYOUT_DEFAULT','layout');
 define('LAYOUT_ADMIN_DEFAULT','layoutAdmin');
 define('DIR_IMAGES',ROOT."/public/images");
+define('DIR_IMAGES_DATA',ROOT."/public/images/data");
 
 $url = $_SERVER['REQUEST_URI'];
 Router::dispatch($url);

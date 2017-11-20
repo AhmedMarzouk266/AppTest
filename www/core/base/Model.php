@@ -45,7 +45,7 @@ abstract class Model
     public function load($data)
     {
 
-        foreach ($this->attributes as $key => $value) {
+        foreach ($this->attributes as $key => $value) { // title = ... , sort = ...
             if (isset($data[$key])) {
                 $this->attributes[$key] = $data[$key];
             }
@@ -98,7 +98,7 @@ abstract class Model
     public static function findOneById($id){ // returns one object ! not array
         self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
-        $sql .= " WHERE id =" . $id . " LIMIT 1";
+        $sql .= " WHERE id = " . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {

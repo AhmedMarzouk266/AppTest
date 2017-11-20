@@ -15,16 +15,11 @@ class MainController extends AppController
 {
     public function indexAction()
     {
-        $this->route['controller']='test';
         Router::$route['controller']='test';
-        debug(Router::$route['controller']);
-        debug($this->route['controller']);
-        $test = new TestController($this->route);
-        debug($test);
+        $test = new TestController(Router::$route);
         $test->indexAction();
-        // here test->setvars() has run from the indedx frunction,
-        // but getView(); is called by another object ! which is Main controller !
-        // even if we change the Router::$route var but the object has been made !
+        $test->getView();
+        $this->layout = false;
     }
 
     public function loginAction()

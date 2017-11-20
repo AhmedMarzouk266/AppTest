@@ -28,6 +28,7 @@ abstract class Controller
     public function setVars($vars)
     {
         $this->vars = $vars;
+
     }
 
 
