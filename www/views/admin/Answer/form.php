@@ -20,12 +20,13 @@ if(isset($answer->id)){
     <label> Question ID : </label>
     <select name="quest_id">
         <?php foreach ($questions as $question){?>
-            <option value="<?=$question->id?>"><?=$question->title?></option>
+            <option value="<?=$question->id?>" <?php if($question->id == $answer->quest_id){echo 'selected';}?> ><?=$question->title?></option>
         <?php }?>
     </select>
     <br/><br/>
     <label>Image Answer :</label>
-    <input type="file" name="images" placeholder="image src .." value="<?=$answer->images?>" >
+    <input type="file" name="images" placeholder="image src ..">
+    <span>Uploaded Image : <?=$answer->images?></span>
 </div><br/>
     <input type="submit" name="submit" value="Save">
 

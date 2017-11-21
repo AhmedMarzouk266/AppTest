@@ -9,6 +9,7 @@
 namespace controllers\admin;
 
 
+use core\ImageTools;
 use models\Answer;
 use models\Question;
 
@@ -30,14 +31,15 @@ class AnswerController extends AppController
 
         if(!empty($_POST)){
             $answer = Answer::findOneById($id);
-            $data = $_POST;
-
-            $tmp_name = $_FILES['images']['tmp_name'];
-            $target_file = basename($_FILES['images']['name']);
-            $upload_dir  = DIR_IMAGES."/data/".$target_file;
-            move_uploaded_file($tmp_name,$upload_dir);
-
-            $data['images'] = "/images/data/".$target_file;
+            $data   = $_POST;
+            // to image tools
+            if(!empty($_FILES['images'])){
+                $ansImage    = new ImageTools();
+                $target_file = $ansImage->saveImageFromPost();
+                $data['images'] = IMAGE_DATA_PATH."/".$target_file;
+            }else{
+                $data['images'] = $answer->images;
+            }
             $answer->load($data);
             $answer->save();
             $this->redirect('\admin\answer');
@@ -53,7 +55,12 @@ class AnswerController extends AppController
 // validation is needed !
         if(!empty($_POST)){
             $answer = new Answer();
-            $answer->load($_POST);
+            $data   = $_POST;
+            $ansImage    = new ImageTools();
+            $target_file = $ansImage->saveImageFromPost();
+            $data['images'] = IMAGE_DATA_PATH."/".$target_file;
+
+            $answer->load($data);
             $answer->save();
             $this->redirect('\admin\answer');
         }
@@ -62,6 +69,11 @@ class AnswerController extends AppController
 
     public function deleteAction(){
         if (isset($_GET['id'])) {
+            $answer = Answer::findOneById($_GET['id']);
+            $imageFile =PUBLIC_PATH.$answer->images ;
+            if(file_exists($imageFile)){
+                unlink($imageFile);
+            }
             Answer::deleteById($_GET['id']);
             $this->redirect("\admin\answer");
         }

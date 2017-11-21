@@ -30,7 +30,7 @@ if(isset($question->id)){
         <div class="col-sm-10">
             <select name="test_id">
                 <?php foreach ($tests as $test){?>
-                    <option value="<?=$test->id?>"><?=$test->title?></option>
+                    <option value="<?=$test->id?>" <?php if($test->id == $question->test_id){echo 'selected';}?> ><?=$test->title?></option>
                 <?php }?>
             </select>
         </div>
