@@ -1,15 +1,28 @@
 
+
+
+    <h1><?=$title?></h1><br/><br/>
+
+
+
 <div class="container">
-
-    <h1><?=$title?></h1><br/>
-    <form action="/admin/main" method="post" style="border: .5px solid darkgray; padding: 10px">
-
-        <input type="text" id="userName" name="userName" placeholder="userName..">
-        </br> </br>
-        <input type="text" id="userPassword" name="password" placeholder="password..">
-        </br> </br>
-        <button type="submit" name="submit">login</button>
-        <br/>
+    <form action="/admin/main" method="post">
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Username : </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="userName" id="userName" placeholder="Username">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Password :</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="userPassword" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+                <button type="submit" name="submit" class="btn btn-primary">Sign in</button>
+            </div>
+        </div>
     </form>
-
 </div>

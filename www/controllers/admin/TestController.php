@@ -34,7 +34,6 @@ class TestController extends AppController
 
         $this->view ='form';
         $test_id = $_GET['test_id'];
-        $_SESSION['test_id'] = $test_id;
         $test    = Test::findOneById($test_id);
         $action = "/admin/test/edit?test_id= ". $test->id ;
         $this->setVars(compact('test','action'));

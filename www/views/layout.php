@@ -17,9 +17,8 @@
 <!---->
 
 <body class="container-fullwidth">
-
 <nav class="navbar  navbar-toggleable navbar-light" style="background-color: lightskyblue;">
-    <a class="navbar-brand" href="#">AppTest</a>
+    <a class="navbar-brand" href="/">AppTest</a>
     <div>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -32,7 +31,8 @@
     </div>
 
 </nav>
-
+<br/>
+<br/>
 <div class="container">
 
     <?php

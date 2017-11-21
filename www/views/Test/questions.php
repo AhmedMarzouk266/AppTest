@@ -27,7 +27,6 @@
 <!--href="questions?test_id=--><?//=$question->test_id?><!--&method=next"-->
 
 <br/>
-<hr/>
 
 
 

@@ -18,15 +18,14 @@ class AnswerController extends AppController
     public function indexAction(){
         $title= 'List of Answers';
         $quest_title ="";
-        if(isset($_SESSION['quest_id'])){
-            $answers  = Answer::findAll(['quest_id' => $_SESSION['quest_id']]);
-            $question = Question::findOneById($_SESSION['quest_id']);
+        if(!empty($_GET['quest_id'])){
+            $_SESSION['quest_id'] = $_GET['quest_id'];
+            $answers  = Answer::findAll(['quest_id' => $_GET['quest_id']]);
+            $question = Question::findOneById($_GET['quest_id']);
             $quest_title= $question->title;
-            if(empty($_GET['quest_id'])){
-                unset($_SESSION['quest_id']);
-            }
         }else{
             $answers = Answer::findAll();
+            unset($_SESSION['quest_id']);
         }
         $this->setVars(compact('answers','title','quest_title'));
     }
@@ -53,7 +52,7 @@ class AnswerController extends AppController
             }
             $answer->load($data);
             $answer->save();
-            $this->redirect('\admin\answer');
+            $this->redirect('\admin\answer\index?quest_id='.$_SESSION['quest_id']);
         }
     }
 
@@ -75,7 +74,7 @@ class AnswerController extends AppController
 
             $answer->load($data);
             $answer->save();
-            $this->redirect('\admin\answer');
+            $this->redirect('\admin\answer\index?quest_id='.$_SESSION['quest_id']);
         }
     }
 

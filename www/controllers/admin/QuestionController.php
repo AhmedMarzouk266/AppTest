@@ -19,17 +19,16 @@ class QuestionController extends AppController
         // give data for a list of all questions.
         $quest_title="";
         $title= 'List of Questions';
-        if(isset($_SESSION['test_id'])){
+        if(!empty($_GET['test_id'])){
             // i came from a test link not general so :
-            $questions = Question::findAll(['test_id'=>$_SESSION['test_id']]);
-            $test = Test::findOneById($_SESSION['test_id']);
+            $_SESSION['test_id'] = $_GET['test_id'];
+            $questions = Question::findAll(['test_id'=>$_GET['test_id']]);
+            $test = Test::findOneById($_GET['test_id']);
             $quest_title = $test->title;
-            if(empty($_GET['test_id'])){
-                unset($_SESSION['test_id'] );
-            }
         }else{
             // i came from general link
             $questions = Question::findAll();
+            unset( $_SESSION['test_id']);
         }
         $this->setVars(compact('questions','title','quest_title'));
     }
@@ -38,7 +37,6 @@ class QuestionController extends AppController
 // validation is needed !
         $this->view ='form';
         $id       = $_GET['id'];
-        $_SESSION['quest_id'] = $id;
         $question = Question::findOneById($id);
         $tests    = Test::findAll();
         $answers  = Answer::findAll();
@@ -51,7 +49,7 @@ class QuestionController extends AppController
 
             $question->load($_POST);
             $question->save();
-            $this->redirect('\admin\question');
+            $this->redirect('\admin\question\index?test_id='.$_SESSION['test_id']);
         }
     }
 
@@ -68,7 +66,7 @@ class QuestionController extends AppController
             $question = new Question();
             $question->load($_POST);
             $question->save();
-            $this->redirect('\admin\question');
+            $this->redirect('\admin\question\index?test_id='.$_SESSION['test_id']);
         }
     }
 
