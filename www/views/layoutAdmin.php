@@ -5,53 +5,55 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>AppTest</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!--    <link rel="stylesheet" type="text/css" href="..\..\public\styles\styles.css">-->
 
 </head>
 <body class="container-fullwidth" style="background-color:white">
-
-<nav class="navbar  navbar-toggleable navbar-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="\admin">AppTest Admin</a>
 
-
-        <ul class="navbar-nav nav">
-            <li class="nav-item ">
-                <a href="/admin/question">All Questions</a><br/><br/>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">Tests</a>
             </li>
             <li class="nav-item ">
-                <a href="/admin/answer">All Answers</a><br/><br/>
+                <a class="nav-link" href="/admin/question">Questions</a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/answer">Answers</a>
+            </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right " style="margin-right: 15px;">
+
+        <ul class="navbar-nav navbar-right">
             <?php if(!empty($_SESSION['USER'])){ ?>
-                    <li class="nav-item">
-                        <a href="#" type="submit" name="logout"> User : <?=$_SESSION['USER']?></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="\admin\main\logout" type="submit" name="logout">Log Out</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> User : <?=$_SESSION['USER']?></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="\admin\main\logout">Log Out</a>
+                </li>
 
             <?php }?>
-
         </ul>
-
-
+    </div>
 </nav>
-
+<br/>
 
     <div  class="container">
         <?=$content?>
     </div>
 <!-- // add logout in head menu -->
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
+<script src="/javascripts/scripts.js"></script>
 
 </body>
 </html>

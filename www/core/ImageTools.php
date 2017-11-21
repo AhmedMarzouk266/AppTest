@@ -18,12 +18,16 @@ class ImageTools
 
     public function saveImageFromPost(){
         // give the image a unique name then save it in the directory i want.
-        $imageData = $_FILES ;
-        $tmp_name         = $imageData['images']['tmp_name'];
-        $file_name = $this->getImageName ();
-        $upload_dir       = DIR_IMAGES_DATA."/".$file_name;
-        move_uploaded_file($tmp_name,$upload_dir);
-        return $file_name ;
+        if(!empty($_FILES['images'])) {
+            $imageData = $_FILES;
+            $tmp_name = $imageData['images']['tmp_name'];
+            $file_name = $this->getImageName();
+            $upload_dir = DIR_IMAGES_DATA . "/" . $file_name;
+            move_uploaded_file($tmp_name, $upload_dir);
+            return $file_name;
+        }else{
+            return false;
+        }
     }
 
     protected function getImageName(){

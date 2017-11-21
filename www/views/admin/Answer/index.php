@@ -5,7 +5,7 @@
     Hello Admin
 </h1>
 <hr/>
-<h3><?=$title?></h3>
+<h3><?=$title?>.<?=$quest_title?></h3>
 <br/>
 
 <a href="/admin/answer/add">Add New Answer</a><br/><br/>
@@ -28,3 +28,4 @@
     </tr>
 
 <?php }?>
+

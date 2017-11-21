@@ -17,8 +17,18 @@ class AnswerController extends AppController
 {
     public function indexAction(){
         $title= 'List of Answers';
-        $answers = Answer::findAll();
-        $this->setVars(compact('answers','title'));
+        $quest_title ="";
+        if(isset($_SESSION['quest_id'])){
+            $answers  = Answer::findAll(['quest_id' => $_SESSION['quest_id']]);
+            $question = Question::findOneById($_SESSION['quest_id']);
+            $quest_title= $question->title;
+            if(empty($_GET['quest_id'])){
+                unset($_SESSION['quest_id']);
+            }
+        }else{
+            $answers = Answer::findAll();
+        }
+        $this->setVars(compact('answers','title','quest_title'));
     }
 
     public function editAction(){
@@ -27,15 +37,16 @@ class AnswerController extends AppController
         $id       = $_GET['id'];
         $answer = Answer::findOneById($id);
         $questions = Question::findAll();
-        $this->setVars(compact('answer','questions'));
+        $action = "/admin/answer/edit?id= ". $answer->id ;
+        $src = $answer->images;
+        $this->setVars(compact('answer','questions','action','src'));
 
         if(!empty($_POST)){
             $answer = Answer::findOneById($id);
             $data   = $_POST;
-            // to image tools
-            if(!empty($_FILES['images'])){
-                $ansImage    = new ImageTools();
-                $target_file = $ansImage->saveImageFromPost();
+            $ansImage    = new ImageTools();
+            $target_file = $ansImage->saveImageFromPost();
+            if($target_file){
                 $data['images'] = IMAGE_DATA_PATH."/".$target_file;
             }else{
                 $data['images'] = $answer->images;
@@ -51,7 +62,9 @@ class AnswerController extends AppController
     {
         $this->view ='form';
         $questions = Question::findAll();
-        $this->setVars(compact('questions'));
+        $action = "/admin/answer/add";
+        $src = "../../public/images/data/NoImage.png";
+        $this->setVars(compact('questions','action','src'));
 // validation is needed !
         if(!empty($_POST)){
             $answer = new Answer();
@@ -74,7 +87,7 @@ class AnswerController extends AppController
             if(file_exists($imageFile)){
                 unlink($imageFile);
             }
-            Answer::deleteById($_GET['id']);
+            $answer->deleteByObjectId();
             $this->redirect("\admin\answer");
         }
     }

@@ -4,7 +4,7 @@
     Hello Admin
 </h1>
 <hr/>
-<h3><?=$title?></h3>
+<h3><?=$title?>.<?=$quest_title?></h3>
 <br/>
 <a href="/admin/question/add">Add New Question</a><br/><br/>
 <table class="table">

@@ -1,15 +1,6 @@
 <h1> Test Edit / Insert </h1>
 
 <!-- action be in a variable or can be just a slash for the current page -->
-<?php
-if(isset($test->id)){
-    $action = "/admin/test/edit?test_id= ". $test->id ;
-}else{
-    $action = "/admin/test/add";
-}
-?>
-
-
 
 <form action="<?=$action?>" method="post">
     <div class="form-group row">
@@ -19,14 +10,18 @@ if(isset($test->id)){
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">sort :</label>
+        <label class="col-sm-2 col-form-label">Sort :</label>
         <div class="col-sm-10">
             <input type="number" name="sort" class="form-control" placeholder="" value="<?=$test->sort?>" >
         </div>
     </div>
     <div class="form-group row">
         <div class="col-sm-10">
-            <input type="submit" name="submit" value="Save">
+            <button type="submit" name="submit" class="btn btn-primary">Save</button>
         </div>
     </div>
 </form>
+<br/>
+
+<a href="/admin/question/index?test_id=<?=$test->id?>">Questions: <?=$test->title?></a>
+

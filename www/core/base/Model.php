@@ -179,5 +179,14 @@ abstract class Model
         $stmt->execute([$id]);
     }
 
+    public function deleteByObjectId(){
+        self::setDB();
+        $id = $this->id;
+        $sql  = "DELETE FROM ".static::$tableName;
+        $sql .= " WHERE id= ? ";
+        $stmt = self::$db->pdo->prepare($sql);
+        $stmt->execute([$id]);
+    }
+
 
 }

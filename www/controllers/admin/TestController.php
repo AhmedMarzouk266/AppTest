@@ -34,8 +34,10 @@ class TestController extends AppController
 
         $this->view ='form';
         $test_id = $_GET['test_id'];
+        $_SESSION['test_id'] = $test_id;
         $test    = Test::findOneById($test_id);
-        $this->setVars(compact('test'));
+        $action = "/admin/test/edit?test_id= ". $test->id ;
+        $this->setVars(compact('test','action'));
 
         if(!empty($_POST)){
             $test = Test::findOneById($test_id);
@@ -49,6 +51,8 @@ class TestController extends AppController
     public function addAction()
     {
         $this->view ='form';
+        $action = "/admin/test/add";
+        $this->setVars(compact('action'));
         if(!empty($_POST)){
             $test = new Test();
             $test->load($_POST);

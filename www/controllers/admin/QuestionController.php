@@ -9,6 +9,7 @@
 namespace controllers\admin;
 
 
+use models\Answer;
 use models\Question;
 use models\Test;
 
@@ -16,18 +17,33 @@ class QuestionController extends AppController
 {
     public function indexAction(){
         // give data for a list of all questions.
+        $quest_title="";
         $title= 'List of Questions';
-        $questions = Question::findAll();
-        $this->setVars(compact('questions','title'));
+        if(isset($_SESSION['test_id'])){
+            // i came from a test link not general so :
+            $questions = Question::findAll(['test_id'=>$_SESSION['test_id']]);
+            $test = Test::findOneById($_SESSION['test_id']);
+            $quest_title = $test->title;
+            if(empty($_GET['test_id'])){
+                unset($_SESSION['test_id'] );
+            }
+        }else{
+            // i came from general link
+            $questions = Question::findAll();
+        }
+        $this->setVars(compact('questions','title','quest_title'));
     }
 
     public function editAction(){
 // validation is needed !
         $this->view ='form';
         $id       = $_GET['id'];
+        $_SESSION['quest_id'] = $id;
         $question = Question::findOneById($id);
         $tests    = Test::findAll();
-        $this->setVars(compact('question','tests'));
+        $answers  = Answer::findAll();
+        $action = "/admin/question/edit?id= ". $question->id ;
+        $this->setVars(compact('question','tests','answers','action'));
 
         if(!empty($_POST)){
             $question = Question::findOneById($id);
@@ -45,7 +61,9 @@ class QuestionController extends AppController
 // validation is needed !
         $this->view ='form';
         $tests    = Test::findAll();
-        $this->setVars(compact('tests'));
+        $answers  = Answer::findAll();
+        $action = "/admin/question/add";
+        $this->setVars(compact('tests','answers','action'));
         if(!empty($_POST)){
             $question = new Question();
             $question->load($_POST);
