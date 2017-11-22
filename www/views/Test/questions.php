@@ -14,7 +14,7 @@
 
     <label>
             <input type="submit" type="radio" name="answer" onchange='this.form.submit();' value="<?=$answer->id?>">
-            <img src="<?=$answer->images?>" height="42" width="42">
+            <img src="<?=$answer->images?>" height="90" width="90">
     </label>
             <br/> <br/>
             <input type="hidden" name="quest_id" value="<?=$question->id?>">

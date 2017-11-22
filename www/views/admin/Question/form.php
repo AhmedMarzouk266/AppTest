@@ -1,8 +1,9 @@
 <h1> Question Edit / Insert </h1>
 <br/>
 
-<a href="/admin/answer/index?quest_id=<?=$question->id?>">Answers</a><br/><br/>
-
+<?php if($this->route['action']=='edit'){?>
+    <a href="/admin/answer/index?quest_id=<?=$question->id?>">Answers</a><br/><br/>
+<?php }?>
 <form action="<?=$action?>" method="post">
     <div class="form-group row">
         <label class="col-sm-2 col-form-label"> Title :</label>
@@ -13,7 +14,7 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label"> Sort :</label>
         <div class="col-sm-10">
-            <input type="number" name="sort" class="form-control" value="<?=$question->sort?>" placeholder="sort">
+            <input type="number" name="sort" class="form-control" value="<?=$question->sort?>" placeholder="Sort">
         </div>
     </div>
     <div class="form-group row">
@@ -33,7 +34,7 @@
             <select name="right_ans_id" class="custom-select form-control">
                 <option disabled selected value> -- select an option -- </option>
                 <?php foreach ($answers as $answer){?>
-                    <option value="<?=$answer->id?>" <?php if($answer->id === $question->right_ans_id){echo 'selected';}?> ><?=$answer->title?></option>
+                    <option value="<?=$answer->id?>" <?php if($answer->id == $question->right_ans_id){echo 'selected';}?> ><?=$answer->title?></option>
                 <?php }?>
             </select>
         </div>

@@ -87,7 +87,7 @@ class AnswerController extends AppController
                 unlink($imageFile);
             }
             $answer->deleteByObjectId();
-            $this->redirect("\admin\answer");
+            $this->redirect('\admin\answer\index?quest_id='.$_SESSION['quest_id']);
         }
     }
 

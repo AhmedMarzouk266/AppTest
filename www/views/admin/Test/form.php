@@ -1,8 +1,9 @@
 <h1> Test Edit / Insert </h1>
 
 <!-- action be in a variable or can be just a slash for the current page -->
-<a href="/admin/question/index?test_id=<?=$test->id?>">Questions</a><br/><br/>
-
+<?php if($this->route['action']=='edit'){?>
+    <a href="/admin/question/index?test_id=<?=$test->id?>">Questions</a><br/><br/>
+<?php }?>
 <form action="<?=$action?>" method="post">
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Title :</label>

@@ -74,7 +74,7 @@ class QuestionController extends AppController
     public function deleteAction(){
         if (isset($_GET['id'])) {
             Question::deleteById($_GET['id']);
-            $this->redirect("\admin\question");
+            $this->redirect('\admin\question\index?test_id='.$_SESSION['test_id']);
         }
     }
 
