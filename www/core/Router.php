@@ -7,7 +7,7 @@
 namespace core;
 class Router
 {
-    public static $route = [ // route
+    public static $route = [
         'controller' => 'Main',
         'action' => 'index',
         'prefix' => ''

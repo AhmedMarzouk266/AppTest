@@ -20,13 +20,16 @@ class View
 
     public function render($vars){
         $layoutFile = DIR_VIEW."/".$this->layout.".php" ;
+        $layoutFile = str_replace("\\","/",$layoutFile);
        // $this->vars = $vars;
         extract($vars);
         //extract gives you vars in the back ground so you can use them
         if($this->layout != false){
             if(file_exists($layoutFile)){ // check if layout not false
                 ob_start();
-                require_once (DIR_VIEW."/".$this->route['prefix'].$this->route['controller']."//".$this->view.".php");
+                $view_name = DIR_VIEW."/".$this->route['prefix'].$this->route['controller']."/".$this->view.".php" ;
+                $view_name = str_replace("\\","/",$view_name);
+                require_once ($view_name);
                 $content = ob_get_clean();
                 require_once($layoutFile);
             }else{

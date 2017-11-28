@@ -15,8 +15,8 @@ class MainController extends AppController
 {
     public function indexAction()
     {
-        Router::$route['controller']='test';
-        $test = new TestController(Router::$route);
+        $this->route['controller']='Test';
+        $test = new TestController($this->route);
         $test->indexAction();
         $test->getView();
         $this->layout = false;

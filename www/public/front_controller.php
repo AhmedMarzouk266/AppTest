@@ -5,9 +5,10 @@ use core\Router;
 
 spl_autoload_register(function($classname){
 // runs when you make a class
-    //$classname = ucwords($classname);
-    if(file_exists(ROOT."/{$classname}.php")){
-        require_once (ROOT."/{$classname}.php");
+    $file_name = ROOT."/{$classname}.php";
+    $file_name = str_replace('\\',"/",$file_name);
+    if(file_exists($file_name)){
+        require_once ($file_name);
     }
 });
 
@@ -28,9 +29,6 @@ define('DIR_IMAGES_DATA',ROOT."/public".IMAGE_DATA_PATH);
 
 $url = $_SERVER['REQUEST_URI'];
 Router::dispatch($url);
-
-
-
 
 
 
