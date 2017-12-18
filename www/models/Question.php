@@ -35,7 +35,6 @@ class Question extends Model
                 foreach ($questions as $question) {
                     if (!in_array($question->id, $_SESSION['QUESTIONS'])) {
                         $question->setAnswers();
-
                         return $question;
                     }
                 }

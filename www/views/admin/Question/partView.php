@@ -1,13 +1,3 @@
-<!-- list of all questions -->
-
-<h1>
-    Hello Admin
-</h1>
-<hr/>
-<h3><?= $title ?> :<br/><?= $test->title ?></h3>
-<br/>
-
-<a class="btn btn-primary" href="/admin/question/add?test_id=<?=$_SESSION['test_id']?>">Add New Question</a><br/><br/>
 <div id="ajaxReload">
     <table class="table">
         <tr>
@@ -77,4 +67,3 @@
 
         <script src="<?php echo PUBLIC_PATH."/javascripts/scripts.js";?>"></script>
 </div>
-

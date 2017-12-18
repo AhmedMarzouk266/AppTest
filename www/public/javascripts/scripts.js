@@ -14,5 +14,16 @@ $(document).ready(function () {
     });
 });
 
+var dev1 = document.getElementById('ajaxReload');
+function changePosition(idSort,idNextSort,testId){
+    var response = '';
+    var url    = '/admin/question/edit?idSort='+idSort+'&idNextSort='+idNextSort;
+    $.ajax({
+        url        : url,
+        type       : 'GET',
+        success    : function(html){
+           $('#ajaxReload').load('/admin/question/index?test_id='+testId+'&partView=true');
+        }
+    });
 
-/////////////////////////////////////////////////////////////////
+}
