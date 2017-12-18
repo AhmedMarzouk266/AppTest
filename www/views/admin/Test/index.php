@@ -18,7 +18,7 @@
 
 <?php foreach($tests as $test){ ?>
         <tr>
-            <td ><?=$test->title?></td>
+            <td ><a href="/admin/question/index?test_id=<?=$test->id?>"><?=$test->title?></a></td>
             <td>
                 <a href="/admin/test/edit?test_id=<?=$test->id?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
             </td>

@@ -12,6 +12,7 @@ use core\base\View;
 abstract class Controller
 {
     public $layout;
+    public $partialView;
     public $objView;
     public $view; // set by class
     public $quest; // already set by class
@@ -23,6 +24,7 @@ abstract class Controller
         $this->layout = LAYOUT_DEFAULT;
         $this->route = $route;
         $this->view = $this->route['action'];
+        $this->partialView = false;
     }
 
     public function setVars($vars)
@@ -34,7 +36,7 @@ abstract class Controller
 
     public function getView()
     {
-        $this->objView = new View($this->route, $this->view, $this->layout);
+        $this->objView = new View($this->route, $this->view, $this->layout,$this->partialView);
         $this->objView->render($this->vars);
     }
 

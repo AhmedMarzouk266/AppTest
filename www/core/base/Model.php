@@ -8,6 +8,7 @@
 
 namespace core\base;
 use core\DB;
+use models\Question;
 
 abstract class Model
 {
@@ -56,7 +57,7 @@ abstract class Model
     }
 
 
-    public static function findAll($options = [], $limit = false){
+    public static function findAll($options = [],$condition="",$limit = false){
         self::setDB();
         //debug($options,true);
         $sql = "SELECT * FROM " . static::$tableName;
@@ -64,7 +65,11 @@ abstract class Model
         if (count($options) > 0) {
             $key_value = [];
             foreach ($options as $key => $value) {
-                $key_value[] = "{$key} = ? ";
+                if(!empty($condition)){
+                    $key_value[] = "{$key} {$condition} ? ";
+                }else{
+                    $key_value[] = "{$key} = ? ";
+                }
             }
 
             $sql .= " WHERE ";
@@ -75,6 +80,8 @@ abstract class Model
         if ($limit) {
             $sql .= " LIMIT 1";
         }
+
+            $sql .= " ORDER BY sort ASC ";
 
 
         $stmt = self::$db->pdo->prepare($sql);
@@ -158,6 +165,33 @@ abstract class Model
             return true;
         } else {
             return false;
+        }
+
+    }
+
+    public function updatePosition($sort,$type){
+        // if added an item, so +1 for all items with sorts more than this item.
+        // if deleted an item , so -1 for all items with sorts more than this item.
+        $items = self::findAll(['sort'=>$sort],'>=');
+        // new question
+        if($type == 'newQuestion'){
+            foreach ($items as $item) {
+                $item->sort += 1 ;
+                $item->save();
+            }
+        }elseif ($type == 'deletedQuestion'){ // deleted question :
+            foreach ($items as $item) {
+                $item->sort -= 1 ;
+                $item->save();
+            }
+        }elseif($type == 'updatedQuestion'){ // edited question :
+            $allItems = self::findAll(['test_id'=>$_SESSION['test_id']]);
+            for($i=0;$i<sizeof($allItems);$i++){
+                if($allItems[$i]->sort == $allItems[$i+1]->sort){
+                    $allItems[$i]->sort += 1 ;
+                    $allItems[$i]->save;
+                }
+            }
         }
 
     }
